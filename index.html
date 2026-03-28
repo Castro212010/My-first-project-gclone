@@ -1,27 +1,132 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>google clone</title>
-<link 
-rel="stylesheet" href="style.css">
-</link>
-  </head>
-  <body>
-<center>
-    <img src="gclone.png" alt="google clone"></img>
-<input placeholder="search here"></input>
-<a href="https://google.com" target="_blank">
-   <button>search</button>
-</a>
-   <button>I'm feeling lucky</button>
-</center>
-  </body>
-<center>
-<br>
-<br>
-<br>
-<footer>
-<a href="form.html">fill form</a>
-</footer>
-</center>
+<head>
+  <title>Guess The Number</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      text-align: center;
+      color: white;
+    }
+
+    .container {
+      margin-top: 50px;
+      background: rgba(0,0,0,0.3);
+      padding: 30px;
+      border-radius: 15px;
+      display: inline-block;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    input {
+      padding: 10px;
+      font-size: 18px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      margin: 10px;
+    }
+
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      margin: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+    }
+
+    .check { background: #28a745; color: white; }
+    .reset { background: #dc3545; color: white; }
+    .level { background: #ffc107; color: black; }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>🎯 Guess The Number</h1>
+
+  <p>Select Level:</p>
+  <button class="level" onclick="setLevel(10)">Easy (1-10)</button>
+  <button class="level" onclick="setLevel(50)">Medium (1-50)</button>
+  <button class="level" onclick="setLevel(100)">Hard (1-100)</button>
+
+  <br><br>
+
+  <input id="inputb" placeholder="Enter number">
+  <br>
+
+  <button class="check" onclick="check()">Check</button>
+  <button class="reset" onclick="resetGame()">Reset</button>
+
+  <p id="result">Start guessing...</p>
+  <p id="score">Score: 10</p>
+</div>
+
+<script>
+var inputb = document.getElementById("inputb")
+var result = document.getElementById("result")
+var scoreText = document.getElementById("score")
+
+var maxRange = 10
+var randomnum = Math.floor(Math.random() * maxRange) + 1
+var score = 10
+
+function setLevel(range) {
+   maxRange = range
+   resetGame()
+   result.textContent = "Level set! Guess between 1 and " + maxRange
+}
+
+function check() {
+   var enternum = Number(inputb.value)
+
+   if (enternum < 1 || enternum > maxRange) {
+      result.textContent = "Enter number between 1 and " + maxRange
+      return
+   }
+
+   if (enternum === randomnum) {
+      result.textContent = "🎉 Correct! You won!"
+      alert("You won!")
+   } 
+   else {
+      score--
+      scoreText.textContent = "Score: " + score
+
+      if (enternum > randomnum) {
+         result.textContent = "Too high ⬆️"
+      } else {
+         result.textContent = "Too low ⬇️"
+      }
+
+      if (score === 0) {
+         result.textContent = "💀 Game Over! Number was " + randomnum
+         alert("Game Over")
+      }
+   }
+}
+
+function resetGame() {
+   randomnum = Math.floor(Math.random() * maxRange) + 1
+   score = 10
+   scoreText.textContent = "Score: 10"
+   result.textContent = "Game reset! Start guessing..."
+   inputb.value = ""
+}
+</script>
+
+</body>
 </html>
